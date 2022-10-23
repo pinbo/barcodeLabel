@@ -20,5 +20,5 @@ A function to make QR code raw data for plotting. This function is very fast bec
 }
 \examples{
 qrout <- qrcode("Hello, world!", 1)
-plot(qrout)
+plotqr(qrout)
 }

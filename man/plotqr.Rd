@@ -14,5 +14,5 @@ Plot the QR code
 }
 \examples{
 qrout <- qrcode("Hello, world!", 1)
-plot(qrout)
+plotqr(qrout)
 }

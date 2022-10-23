@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' qrout <- qrcode("Hello, world!", 1)
-#' plot(qrout)
+#' plotqr(qrout)
 qrcode <- function(text, ecl=1) {
   result <- .Call("qrcode2", text, ecl)
   return(t(result)) # seems rotate or not all give the correct text retrun
@@ -19,7 +19,7 @@ qrcode <- function(text, ecl=1) {
 #' @param x output of qrcode function
 #' @examples
 #' qrout <- qrcode("Hello, world!", 1)
-#' plot(qrout)
+#' plotqr(qrout)
 #' @export
 plotqr <- function(x) {
   grid::grid.newpage()
