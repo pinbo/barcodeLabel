@@ -4,7 +4,7 @@ A simple R package for QR code generation and barcode label sheet design (such a
 A shiny app for making labels is available here:
 https://junli.shinyapps.io/label_barcodes/
 
-# Why did I make this package?
+## Why did I make this package?
 
 I need to print a lot of barcode labels with Avery 5967 and 5960. I tried the R package [baRcodeR](https://github.com/ropensci/baRcodeR) but found it is very slow to create QR codes. To speed up the QR code generation, I found the [C version of QR generator](https://github.com/nayuki/QR-Code-generator) and used it in this R package. 
 
@@ -13,7 +13,7 @@ This package is like a modification of [baRcodeR](https://github.com/ropensci/ba
 1. Replaced the "qrcode::qr_code" function with a C version "qrcode" function.
 1. Removed the "code_128_make2" function to simply the package because it is not used often.
 
-# Installation
+## Installation
 
 You can install the package with 3 methods:
 
@@ -64,3 +64,8 @@ barcode_type="matrix", Fsz=12, label_type = "avery5967", showborder = T,
 barcode_height = 1, fontfamily = "sans")
 ```
 
+## Acknowledgements
+Special thanks to the authors of following packages and repositories.
+1. [R package baRcodeR](https://github.com/ropensci/baRcodeR): most of the makeLabel codes are from there.
+2. [QR-Code-generator](https://github.com/nayuki/QR-Code-generator): I get the codes for the C version qrcode function.
+3. [R package qrcode](https://github.com/ThierryO/qrcode) : a lot of insparation from this package.
