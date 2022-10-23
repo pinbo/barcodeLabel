@@ -69,3 +69,4 @@ Special thanks to the authors of following packages and repositories.
 1. [R package baRcodeR](https://github.com/ropensci/baRcodeR): most of the makeLabel codes are from there.
 2. [QR-Code-generator](https://github.com/nayuki/QR-Code-generator): I get the codes for the C version qrcode function.
 3. [R package qrcode](https://github.com/ThierryO/qrcode) : a lot of insparation from this package.
+4. [R package roxygen2](https://github.com/r-lib/roxygen2): Documents were made with command `roxygen2::roxygenise()`

@@ -3,6 +3,4 @@
 export(makeLabel)
 export(plotqr)
 export(qrcode)
-
-# Load dynamic libraries (shared object files)
 useDynLib(barcodeLabel)
