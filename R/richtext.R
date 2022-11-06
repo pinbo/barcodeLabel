@@ -1,7 +1,7 @@
-
-####
 #' Draw formatted text labels
-#' richtext() can draw text labels with mixed fontface from markdown syntax (only support * quotes)" \*italic\*, or \*\*bold\*\*, or \*\*\*bold italic\*\*\*
+#' 
+#' richtext() can draw text labels with mixed fontface from markdown syntax (only support * quotes)" *italic*, or **bold**, or ***bold italic***
+#' 
 #' @param txt a string
 #' @param x coordinate on the x axis
 #' @param y coordinate on the y axis

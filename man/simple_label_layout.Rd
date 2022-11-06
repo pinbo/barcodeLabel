@@ -68,7 +68,7 @@ linear_label_list <- simple_label_layout(
   barcode_text=dd$plot,
   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
   barcode_on_top = T, barcode_type="linear", font_size =12,
-  barcode_height = 0.4, fontfamily = "sans")
+  barcode_height = 0.4, fontfamily = "sans", useMarkdown = T)
 # 2. create pdf file
 make_custom_label(
     label_number = nrow(dd), # how many labels to print
@@ -78,7 +78,8 @@ make_custom_label(
     showborder = T, # whether to show border of labels
     vp_list = linear_label_list$vp_list,
     content_list = linear_label_list$content_list,
-    text_align = "center" # left or center
+    text_align = "center", # left or center
+    useMarkdown = T
 )
 # for QR codes
 # 1. create simple element layout on each label

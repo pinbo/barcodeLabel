@@ -2,8 +2,7 @@
 % Please edit documentation in R/richtext.R
 \name{richtext}
 \alias{richtext}
-\title{Draw formatted text labels
-richtext() can draw text labels with mixed fontface from markdown syntax (only support * quotes)" \*italic\*, or \*\*bold\*\*, or \*\*\*bold italic\*\*\*}
+\title{Draw formatted text labels}
 \usage{
 richtext(
   txt,
@@ -40,8 +39,7 @@ richtext(
 richtext() returns a gList that can be used in grid::grid.draw
 }
 \description{
-Draw formatted text labels
-richtext() can draw text labels with mixed fontface from markdown syntax (only support * quotes)" \*italic\*, or \*\*bold\*\*, or \*\*\*bold italic\*\*\*
+richtext() can draw text labels with mixed fontface from markdown syntax (only support * quotes)" *italic*, or **bold**, or ***bold italic***
 }
 \examples{
 library(grid)
