@@ -13,7 +13,7 @@
 #' @rdname make_custom_label
 preview_label <- function(label_width=1.75, label_height=0.5, vp_list, content_list, text_align="center", useMarkdown=FALSE){
   grid:: grid.newpage()
-  vpbox = grid::viewport(x=0.5, y=0.5, width=unit(label_width, "inches"), height=unit(label_height, "inches"))
+  vpbox = grid::viewport(x=0.5, y=0.5, width=grid::unit(label_width, "inches"), height=grid::unit(label_height, "inches"))
   grid::pushViewport(vpbox)
   grid::grid.rect()
   if (length(vp_list) > 0){
