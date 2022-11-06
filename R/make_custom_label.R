@@ -203,7 +203,7 @@ make_custom_label <- function(
             richtext(content[i], x=0, hjust=0, useMarkdown=useMarkdown)
           } else if (text_align == "right") {
             richtext(content[i], x=1, hjust=1, useMarkdown=useMarkdown)
-          } else richtext(content[1], useMarkdown=useMarkdown)
+          } else richtext(content[i], useMarkdown=useMarkdown)
         }
         grid::popViewport()
       }

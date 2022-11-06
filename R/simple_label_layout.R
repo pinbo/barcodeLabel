@@ -47,7 +47,7 @@
 #'   barcode_text=dd$plot,
 #'   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
 #'   barcode_on_top = T, barcode_type="matrix", font_size=12,
-#'   barcode_height = 1, fontfamily = "sans")
+#'   barcode_height = 1, fontfamily = "sans", useMarkdown=T)
 #' # 2. create pdf file
 #' make_custom_label(
 #'   label_number = nrow(dd), # how many labels to print
@@ -57,7 +57,8 @@
 #'   showborder = T, # whether to show border of labels
 #'   vp_list = qr_label_list$vp_list,
 #'   content_list = qr_label_list$content_list,
-#'   text_align = "left" # left or center
+#'   text_align = "left", # left or center
+#'   useMarkdown = T
 #' )
 #' 
 simple_label_layout = function(
