@@ -18,7 +18,8 @@ simple_label_layout(
   line_number = NULL,
   barcode_on_top = FALSE,
   barcode_height = ifelse(barcode_type == "linear", 0.5, 1),
-  ecl = 1
+  ecl = 1,
+  useMarkdown = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,8 @@ It is used to determine string width.}
 \item{barcode_height}{barcode height proportion of the label height.}
 
 \item{ecl}{error correction value for matrix labels only (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%)}
+
+\item{useMarkdown}{whether treat ** quotes as markdown (only support fontfaces)}
 }
 \value{
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
@@ -63,7 +66,7 @@ dd <- data.frame(plot = 101:110, accession = LETTERS[1:10])
 # 1. create simple element layout on each label
 linear_label_list <- simple_label_layout(
   barcode_text=dd$plot,
-  print_text = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession),
+  print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
   barcode_on_top = T, barcode_type="linear", font_size =12,
   barcode_height = 0.4, fontfamily = "sans")
 # 2. create pdf file
@@ -81,7 +84,7 @@ make_custom_label(
 # 1. create simple element layout on each label
 qr_label_list <- simple_label_layout(
   barcode_text=dd$plot,
-  print_text = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession),
+  print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
   barcode_on_top = T, barcode_type="matrix", font_size=12,
   barcode_height = 1, fontfamily = "sans")
 # 2. create pdf file

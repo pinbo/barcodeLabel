@@ -1,9 +1,9 @@
 Package: barcodeLabel
 Title: Generate QR code and make PDF labels for printing
-Version: 0.2.0
+Version: 0.3.0
 Authors: Junli Zhang <zhjl86@gmail.com>
 Maintainer: Junli Zhang <zhjl86@gmail.com>
-Description: A simple tools to generate QR codes (output is a matrix of 0 and 1). C codes were borrowed from the QR Code generator library (https://github.com/nayuki/QR-Code-generator). This package runs much faster than the  package qrcode (https://cran.r-project.org/web/packages/qrcode/index.html).
+Description: A simple tools to generate QR codes (output is a matrix of 0 and 1). C codes were borrowed from the QR Code generator library (https://github.com/nayuki/QR-Code-generator). This package runs much faster than the  package qrcode (https://cran.r-project.org/web/packages/qrcode/index.html). It now supports simple markdown text for mixed fontfaces in a line. For more complete rich text support, please check out "gridtext" package.
 License: GPL-3
 URL: https://github.com/pinbo/barcodeLabel
 BugReports: https://github.com/pinbo/barcodeLabel/issues
