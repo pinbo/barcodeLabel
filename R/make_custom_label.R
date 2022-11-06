@@ -18,9 +18,10 @@
 #' @param showborder logical: whether to show border of labels. Set to TRUE to check whether everything fit in the label area.
 #' @param vp_list a list of grid viewport list for user designed label area layout (positions of rectangles on the label)
 #' @param content_list a list of contents to fill in the label area layout
-#' @param text_align left or center alignment for text.
-#'
-#' @return make_custom_label: NULL, just creat a pdf
+#' @param text_align left, right, or center alignment for text.
+#' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
+#' 
+#' @return make_custom_label: NULL, just create a pdf
 #' @export
 #'
 #' @examples
@@ -28,6 +29,7 @@
 #' dd <- data.frame(plot = 101:110, accession = LETTERS[1:10])
 #' label_width = 1.75 # x axis
 #' label_height = 0.5 # y axis
+#' useMarkdown = TRUE
 #' vp_list = list(
 #'   # rectangle area 1: text top left: take up 0.3 of label_height, 0.5 of label_length
 #'   text_vp1 = make_vp(
@@ -63,13 +65,13 @@
 #' )
 #' # content list: should have contents for each element in the vp_list
 #' content_list = list(
-#'   text1 = rep("Davis Field 2022", nrow(dd)),
-#'   text2 = paste0("Plot ",dd$plot),
+#'   text1 = rep("\*Davis Field 2022\*", nrow(dd)),
+#'   text2 = paste0("\*\*Plot\*\* ",dd$plot),
 #'   code = lapply(as.character(dd$plot), barcodeLabel:::code_128_make),
 #'   text3 = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession)
 #' )
 #' # preview
-#' preview_label(label_width=1.75, label_height=0.5, vp_list, content_list)
+#' preview_label(label_width=1.75, label_height=0.5, vp_list, content_list, useMarkdown=useMarkdown)
 #' # create pdf
 #' make_custom_label(
 #'   label_number = nrow(dd), # how many labels to print
@@ -79,7 +81,8 @@
 #'   showborder = T, # whether to show border of labels
 #'   vp_list = vp_list,
 #'   content_list = content_list,
-#'   text_align = "center" # left or center
+#'   text_align = "center", # left or center
+#'   useMarkdown = useMarkdown
 #' )
 
 make_custom_label <- function(
@@ -102,7 +105,8 @@ make_custom_label <- function(
     showborder = FALSE, # whether to show border of labels
     vp_list = NULL,
     content_list = NULL,
-    text_align = "center" # left or center
+    text_align = "center", # left or center
+    useMarkdown = FALSE # whether treat ** quotes as markdown (only support fontfaces)
 ){
   if (!is.null(label_type)){
     if (label_type == "avery5967"){
@@ -196,10 +200,10 @@ make_custom_label <- function(
           grid::grid.draw(content[[i]])
         } else {# text
           if (text_align == "left"){
-            grid::grid.text(label = content[i], x = grid::unit(0, "npc"), just = "left")
-          } else {
-            grid::grid.text(label = content[i])
-          }
+            richtext(content[i], x=0, hjust=0, useMarkdown=useMarkdown)
+          } else if (text_align == "right") {
+            richtext(content[i], x=1, hjust=1, useMarkdown=useMarkdown)
+          } else richtext(content[1], useMarkdown=useMarkdown)
         }
         grid::popViewport()
       }

@@ -14,6 +14,7 @@
 #' @param barcode_on_top whether to put the linear barcode on the top, text at the bottom.
 #' @param barcode_height barcode height proportion of the label height.
 #' @param ecl error correction value for matrix labels only (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%)
+#' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
 #'
 #' @return a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 #' @export
@@ -26,7 +27,7 @@
 #' # 1. create simple element layout on each label
 #' linear_label_list <- simple_label_layout(
 #'   barcode_text=dd$plot,
-#'   print_text = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession),
+#'   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
 #'   barcode_on_top = T, barcode_type="linear", font_size =12,
 #'   barcode_height = 0.4, fontfamily = "sans")
 #' # 2. create pdf file
@@ -44,7 +45,7 @@
 #' # 1. create simple element layout on each label
 #' qr_label_list <- simple_label_layout(
 #'   barcode_text=dd$plot,
-#'   print_text = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession),
+#'   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
 #'   barcode_on_top = T, barcode_type="matrix", font_size=12,
 #'   barcode_height = 1, fontfamily = "sans")
 #' # 2. create pdf file
@@ -70,7 +71,8 @@ simple_label_layout = function(
     line_number = NULL, # how many lines of print_text; determined by number of "\n" in the text if NULL.
     barcode_on_top = FALSE, # for linear barcode128 only, whether it should be put on top of the text
     barcode_height = ifelse(barcode_type=="linear", 0.5, 1), # barcode height proportion
-    ecl = 1 # error correction level for QR code.  1-4 (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%).
+    ecl = 1, # error correction level for QR code.  1-4 (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%).
+    useMarkdown = FALSE # whether treat ** quotes as markdown (only support fontfaces)
 ){
   if (length(barcode_text) == 0) stop("barcode_text is NULL! Nothing to do.")
   if (!is.null(print_text)){
@@ -88,11 +90,19 @@ simple_label_layout = function(
   label_margin_inch = label_margin * short_side
   ## get vp_list and content_list
   # x cannot be center because the label layout width is different for columns
+  normaltext = print_text
+  fontface = 4
+  if(useMarkdown){
+    normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
+    fontface = 4
+  }
   pdf(NULL) # and this could be opened with additional parameters
-  par(ps = Fsz, family = fontfamily)
-  max_text_width = max(strwidth(print_text, units = 'in'))
+  par(ps = Fsz, family = fontfamily, font=fontface)
+  max_text_width = max(strwidth(normaltext, units = 'in'))
   dev.off()
-  # max_text_width = max(strwidth(print_text, font = Fsz, units = 'in', family=fontfamily))
+  # normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T) else print_text
+  # textsizes = sapply(normaltext, function(x) getxy2(x, unit="inch", gp=gpar(fontsize=Fsz, fontfamily=fontfamily, fontface=4))) # use fontface4 to get the max width
+  # max_text_width = max(textsizes[1,])
   cat("max_text_width is", max_text_width, "\n")
   if(barcode_type == "linear"){
     text_width = label_width - 2*label_margin_inch
