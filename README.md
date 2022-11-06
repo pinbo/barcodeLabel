@@ -63,6 +63,8 @@ makeLabel(Labels=dd$plot, name="field2022_QR", text_qr = paste0("Plot ",dd$plot,
 barcode_type="matrix", Fsz=12, label_type = "avery5967", showborder = T, 
 barcode_height = 1, fontfamily = "sans")
 ```
+## Updates
+- 2022-11-06: v0.3.0. Add support for mixed fontfaces (bold, italic and both) with function `richtext`.
 
 ## Acknowledgements
 Special thanks to the authors of following packages and repositories.
