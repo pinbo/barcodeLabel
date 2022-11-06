@@ -65,8 +65,8 @@
 #' )
 #' # content list: should have contents for each element in the vp_list
 #' content_list = list(
-#'   text1 = rep("\*Davis Field 2022\*", nrow(dd)),
-#'   text2 = paste0("\*\*Plot\*\* ",dd$plot),
+#'   text1 = rep("*Davis Field 2022*", nrow(dd)),
+#'   text2 = paste0("**Plot** ",dd$plot),
 #'   code = lapply(as.character(dd$plot), barcodeLabel:::code_128_make),
 #'   text3 = paste0("Plot ",dd$plot, "\n", "Acc ", dd$accession)
 #' )
