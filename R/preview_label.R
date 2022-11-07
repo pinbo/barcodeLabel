@@ -26,9 +26,9 @@ preview_label <- function(label_width=1.75, label_height=0.5, vp_list, content_l
       } else {# text
         if (text_align == "left"){
           # grid::grid.text(label = content[i], x = grid::unit(0, "npc"), just = "left")
-          richtext(content[i], x=0, hjust=0, useMarkdown=useMarkdown)
+          richtext(content[1], x=0, hjust=0, useMarkdown=useMarkdown)
         } else if (text_align == "right") {
-          richtext(content[i], x=1, hjust=1, useMarkdown=useMarkdown)
+          richtext(content[1], x=1, hjust=1, useMarkdown=useMarkdown)
         } else richtext(content[1], useMarkdown=useMarkdown)
       }
       grid::popViewport()
