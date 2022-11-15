@@ -2,9 +2,7 @@
 % Please edit documentation in R/simple_label_layout.R
 \name{simple_label_layout}
 \alias{simple_label_layout}
-\title{Make simple label layout for barcode printing
-The layout on each label is simple: 1 text area + 1 barcode area (up and down) for linear barcodes, 
-and left QR code + right text for matrix barcodes.}
+\title{Make simple label layout for barcode printing}
 \usage{
 simple_label_layout(
   barcode_text = NULL,
@@ -27,7 +25,7 @@ simple_label_layout(
 
 \item{print_text}{a vector of strings for printing on the label (could use "\\n" for line break)}
 
-\item{barcode_type}{"linear" for code128 and "matrix" for QR code}
+\item{barcode_type}{"linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)}
 
 \item{label_width}{label width in inch}
 
@@ -54,7 +52,6 @@ It is used to determine string width.}
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 }
 \description{
-Make simple label layout for barcode printing
 The layout on each label is simple: 1 text area + 1 barcode area (up and down) for linear barcodes, 
 and left QR code + right text for matrix barcodes.
 }
@@ -86,7 +83,7 @@ make_custom_label(
 qr_label_list <- simple_label_layout(
   barcode_text=dd$plot,
   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
-  barcode_on_top = T, barcode_type="matrix", font_size=12,
+  barcode_on_top = T, barcode_type="qr", font_size=12,
   barcode_height = 1, fontfamily = "sans", useMarkdown=T)
 # 2. create pdf file
 make_custom_label(

@@ -1,9 +1,10 @@
 #' Make simple label layout for barcode printing
+#' 
 #' The layout on each label is simple: 1 text area + 1 barcode area (up and down) for linear barcodes, 
 #' and left QR code + right text for matrix barcodes.
 #' @param barcode_text a vector of strings for generating barcodes
 #' @param print_text a vector of strings for printing on the label (could use "\\n" for line break)
-#' @param barcode_type "linear" for code128 and "matrix" for QR code
+#' @param barcode_type "linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)
 #' @param label_width label width in inch
 #' @param label_height label height in inch
 #' @param label_margin 0-1, margin proportion of the short side (label height)
@@ -47,7 +48,7 @@
 #' qr_label_list <- simple_label_layout(
 #'   barcode_text=dd$plot,
 #'   print_text = paste0("**Plot** ",dd$plot, "\n", "**Acc** ", dd$accession),
-#'   barcode_on_top = T, barcode_type="matrix", font_size=12,
+#'   barcode_on_top = T, barcode_type="qr", font_size=12,
 #'   barcode_height = 1, fontfamily = "sans", useMarkdown=T)
 #' # 2. create pdf file
 #' make_custom_label(
@@ -134,7 +135,7 @@ simple_label_layout = function(
       code = lapply(as.character(barcode_text), code_128_make),
       text = print_text
     )
-  } else if (barcode_type =="matrix"){
+  } else if (barcode_type =="qr" | barcode_type =="dm"){
     text_width = label_width - barcode_height * label_height
     cat("text_width is ", text_width, "\n")
     Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
@@ -156,8 +157,11 @@ simple_label_layout = function(
       )
     )
     # content list
+    if(barcode_type =="qr")
+      code = lapply(as.character(barcode_text), qrcode_make, ErrCorr = ecl)
+    else code = lapply(as.character(barcode_text), dmcode_make)
     content_list = list(
-      code = lapply(as.character(barcode_text), qrcode_make, ErrCorr = ecl),
+        code = code,
       text = print_text
     )
   } else {stop("Barcode type must be linear or matrix")}

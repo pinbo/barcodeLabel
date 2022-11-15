@@ -2,7 +2,7 @@
 % Please edit documentation in R/qrcode.R
 \name{qrcode}
 \alias{qrcode}
-\title{A function to make QR code raw data for plotting. This function is very fast because it uses C code in the hood.}
+\title{Make QR code raw data for plotting.}
 \usage{
 qrcode(text, ecl = 1)
 }
@@ -16,7 +16,7 @@ The correction level of the result may be higher than the ecl argument if it can
 a number matrix representing the QR code
 }
 \description{
-A function to make QR code raw data for plotting. This function is very fast because it uses C code in the hood.
+This function is very fast because it uses C code in the hood.
 }
 \examples{
 qrout <- qrcode("Hello, world!", 1)
