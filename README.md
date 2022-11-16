@@ -73,3 +73,4 @@ Special thanks to the authors of following packages and repositories.
 2. [QR-Code-generator](https://github.com/nayuki/QR-Code-generator): I get the codes for the C version qrcode function.
 3. [R package qrcode](https://github.com/ThierryO/qrcode) : a lot of insparation from this package.
 4. [R package roxygen2](https://github.com/r-lib/roxygen2): Documents were made with command `roxygen2::roxygenise()`
+5. [Datamatrix](https://github.com/revk/Datamatrix): get the C codes for making Data Matrix barcodes.
