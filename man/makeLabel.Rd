@@ -40,9 +40,9 @@ makeLabel(
   text_align = ifelse(barcode_type == "linear", "center", "left")
 )
 
-dmcode_make(Labels, square = 1)
+dmcode_make(Labels, square = 1, scale = 1)
 
-qrcode_make(Labels, ErrCorr)
+qrcode_make(Labels, ErrCorr = 2, scale = 1)
 
 code_128_make(Labels)
 }
@@ -106,6 +106,8 @@ code_128_make(Labels)
 \item{label_margin}{0-1. Set a margin to avoid page shift during printing}
 
 \item{text_align}{left or center alignment for text. Default is center for 1D barcode and left for 2D barcodes.}
+
+\item{scale}{0-1 barcode scaling inside the drawing area}
 }
 \value{
 Does not return anything, just create a PDF files with labels.

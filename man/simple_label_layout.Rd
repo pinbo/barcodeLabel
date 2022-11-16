@@ -17,7 +17,8 @@ simple_label_layout(
   barcode_on_top = FALSE,
   barcode_height = ifelse(barcode_type == "linear", 0.5, 1),
   ecl = 1,
-  useMarkdown = FALSE
+  useMarkdown = FALSE,
+  barcode_scale = 1
 )
 }
 \arguments{
@@ -47,6 +48,8 @@ It is used to determine string width.}
 \item{ecl}{error correction value for matrix labels only (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%)}
 
 \item{useMarkdown}{whether treat ** quotes as markdown (only support fontfaces)}
+
+\item{barcode_scale}{0-1, scale barcode plot inside the barcode drawing area}
 }
 \value{
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'

@@ -16,6 +16,7 @@
 #' @param barcode_height barcode height proportion of the label height.
 #' @param ecl error correction value for matrix labels only (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%)
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
+#' @param barcode_scale 0-1, scale barcode plot inside the barcode drawing area
 #'
 #' @return a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 #' @export
@@ -75,7 +76,8 @@ simple_label_layout = function(
     barcode_on_top = FALSE, # for linear barcode128 only, whether it should be put on top of the text
     barcode_height = ifelse(barcode_type=="linear", 0.5, 1), # barcode height proportion
     ecl = 1, # error correction level for QR code.  1-4 (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%).
-    useMarkdown = FALSE # whether treat ** quotes as markdown (only support fontfaces)
+    useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
+    barcode_scale = 1 # 0-1, scale barcode inside the barcode area
 ){
   if (length(barcode_text) == 0) stop("barcode_text is NULL! Nothing to do.")
   if (!is.null(print_text)){
@@ -158,8 +160,8 @@ simple_label_layout = function(
     )
     # content list
     if(barcode_type =="qr")
-      code = lapply(as.character(barcode_text), qrcode_make, ErrCorr = ecl)
-    else code = lapply(as.character(barcode_text), dmcode_make)
+      code = lapply(as.character(barcode_text), qrcode_make, ErrCorr = ecl, scale=barcode_scale)
+    else code = lapply(as.character(barcode_text), dmcode_make, scale=barcode_scale)
     content_list = list(
         code = code,
       text = print_text
@@ -168,3 +170,4 @@ simple_label_layout = function(
   
   return(list(vp_list=vp_list, content_list=content_list))
 }
+
