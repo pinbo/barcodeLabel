@@ -30,7 +30,7 @@ qrcode <- function(text, ecl=1) {
 #' plotqr(dmout)
 dmcode <- function(text, square=1) {
   result <- .Call("dmcode", text, square)
-  return(t(result)) # seems rotate or not all give the correct text retrun
+  return(result) # seems rotate or not all give the correct text retrun
 }
 
 #' Plot the QR code

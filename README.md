@@ -64,6 +64,7 @@ barcode_type="matrix", Fsz=12, label_type = "avery5967", showborder = T,
 barcode_height = 1, fontfamily = "sans")
 ```
 ## Updates
+- 2022-11-23: v0.5.0. Replace Data Matrix C code from [Datamatrix](https://github.com/revk/Datamatrix) with C code from [iec16022](https://github.com/rdoeffinger/iec16022) due to a bug with long strings.
 - 2022-11-15: v0.4.0. Add Data Matrix code and scaling for 2D barcode.
 - 2022-11-06: v0.3.0. Add support for mixed fontfaces (bold, italic and both) with function `richtext`.
 
@@ -73,4 +74,5 @@ Special thanks to the authors of following packages and repositories.
 2. [QR-Code-generator](https://github.com/nayuki/QR-Code-generator): I get the codes for the C version qrcode function.
 3. [R package qrcode](https://github.com/ThierryO/qrcode) : a lot of insparation from this package.
 4. [R package roxygen2](https://github.com/r-lib/roxygen2): Documents were made with command `roxygen2::roxygenise()`
-5. [Datamatrix](https://github.com/revk/Datamatrix): get the C codes for making Data Matrix barcodes.
+5. [iec16022](https://github.com/rdoeffinger/iec16022): get the C codes for making Data Matrix barcodes.
+6. [Datamatrix](https://github.com/revk/Datamatrix): get the idea how to make square datamatrix C codes for making Data Matrix barcodes.

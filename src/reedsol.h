@@ -1,22 +1,29 @@
-// $Log: reedsol.h,v $
-// Revision 1.3  2006/01/25 11:10:43  cvs
-// New sqlhtml
-//
-// This software is provided under the terms of the GPL v2 or later.
-// This software is provided free of charge with a full "Money back" guarantee.
-// Use entirely at your own risk. We accept no liability. If you don't like that - don't use it.
+/**
+ *
+ * This is a simple Reed-Solomon encoder
+ * (C) Cliff Hones 2004
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ *
+ */
 
-// Revision 1.2  2004/09/09 07:45:09  cvs
-// Added change history to source files
-// Added "info" type to IEC16022
-// Added exact size checking shortcodes on encoding generation for iec16022
-//
+#ifndef __REEDSOL_H
+#define __REEDSOL_H
 
-//#define	RS_CONNECT	// If correction is needed too
+void rs_init_gf(int poly);
+void rs_init_code(int nsym, int index);
+void rs_encode(int len, const unsigned char *data, unsigned char *res);
 
-void rs_init(int poly,int nsym, int index);
-void rs_encode(int len, unsigned char *data,unsigned char*res);
-#ifdef RS_CORRECT
-int rs_correct(int datalen, byte *data);
-#endif
-
+#endif				/* __REEDSOL_H */
