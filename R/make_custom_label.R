@@ -141,11 +141,18 @@ make_custom_label <- function(
   
   # Viewport Setup
   ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
+  # barcode_layout <- grid::grid.layout(
+  #   numrow, 
+  #   numcol,
+  #   widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"),
+  #   heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in")
+  # )
+  # make exact grid
   barcode_layout <- grid::grid.layout(
-    numrow, 
-    numcol,
-    widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"),
-    heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in")
+    numrow*2 - 1, 
+    numcol*2 - 1,
+    widths = grid::unit(c(rep(c(label_width, column_space), numcol-1), label_width), "in"),
+    heights = grid::unit(c(rep(c(label_height, row_space), numrow-1), label_height), "in")
   )
   
   # generate label positions
@@ -188,7 +195,8 @@ make_custom_label <- function(
       )
       grid::pushViewport(bc_vp)
     }
-    grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
+    # grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
+    grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y*2-1, layout.pos.col=lab_pos$x*2-1))
     if (showborder) grid::grid.rect()
     # draw barcodes
     if (length(vp_list) > 0){

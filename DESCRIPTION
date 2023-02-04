@@ -1,6 +1,6 @@
 Package: barcodeLabel
 Title: Generate barcodes for code128, QR code or Data Matrix code (ECC200) and make PDF labels for printing
-Version: 0.5.0
+Version: 0.6.0
 Authors: Junli Zhang <zhjl86@gmail.com>
 Maintainer: Junli Zhang <zhjl86@gmail.com>
 Description: A simple tool to generate barcodes for code128, QR code or Data Matrix code (ECC200) and make PDF labels for printing. This package runs much faster than the  package qrcode (https://cran.r-project.org/web/packages/qrcode/index.html). It now supports simple markdown text for mixed fontfaces in a line. For more complete rich text support, please check out "gridtext" package.

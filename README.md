@@ -64,6 +64,7 @@ barcode_type="matrix", Fsz=12, label_type = "avery5967", showborder = T,
 barcode_height = 1, fontfamily = "sans")
 ```
 ## Updates
+- 2023-02-04: v0.6.0. Make exact layout of labels on the page.
 - 2022-11-23: v0.5.0. Replace Data Matrix C code from [Datamatrix](https://github.com/revk/Datamatrix) with C code from [iec16022](https://github.com/rdoeffinger/iec16022) due to a bug with long strings.
 - 2022-11-15: v0.4.0. Add Data Matrix code and scaling for 2D barcode.
 - 2022-11-06: v0.3.0. Add support for mixed fontfaces (bold, italic and both) with function `richtext`.
