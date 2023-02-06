@@ -22,7 +22,6 @@ make_custom_label(
   height_margin = 0.5,
   label_width = 1.75,
   label_height = 0.5,
-  font_size = 12,
   fontfamily = "mono",
   showborder = FALSE,
   vp_list = NULL,
@@ -55,7 +54,7 @@ preview_label(
 
 \item{name}{pdf output name (no ".pdf)}
 
-\item{label_type}{Presets for label type "avery5967" (1.75" x 0.5") or "avery5960" (2.63" x 1"). Default is NULL so you can change the page size and lable size parameters.}
+\item{label_type}{Presets for label type "avery5967" (1.75" x 0.5") or "avery5960" (2.63" x 1") or  "tough-spots-3/8inch" (USA Scientific TOUGH-SPOTS LABELS ON SHEETS cat# 9185-1000 to 9185-1008 3/8 inch diameter). Default is NULL so you can change the page size and label size parameters.}
 
 \item{Across}{logical. When TRUE, print labels across rows, left to right. When FALSE, print labels down columns, top to bottom.}
 
@@ -79,8 +78,6 @@ preview_label(
 
 \item{label_height}{label height in inch}
 
-\item{font_size}{font size; automatically adjsuted smaller based on line number and text area height}
-
 \item{fontfamily}{font family ("mono", "sans", "serif") or specific font based on your operation system.}
 
 \item{showborder}{logical: whether to show border of labels. Set to TRUE to check whether everything fit in the label area.}
@@ -102,6 +99,8 @@ preview_label(
 \item{height}{rectangle area height in inch}
 
 \item{just}{coordinates x and y are for (relative to)}
+
+\item{font_size}{font size; automatically adjsuted smaller based on line number and text area height}
 
 \item{line_number}{how many lines of text?}
 }

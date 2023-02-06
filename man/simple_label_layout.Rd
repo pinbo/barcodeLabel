@@ -18,7 +18,8 @@ simple_label_layout(
   barcode_height = ifelse(barcode_type == "linear", 0.5, 1),
   ecl = 1,
   useMarkdown = FALSE,
-  barcode_scale = 1
+  barcode_scale = 1,
+  font_col = "black"
 )
 }
 \arguments{
@@ -26,7 +27,7 @@ simple_label_layout(
 
 \item{print_text}{a vector of strings for printing on the label (could use "\\n" for line break)}
 
-\item{barcode_type}{"linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)}
+\item{barcode_type}{"null" for no barcode needed, "linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)}
 
 \item{label_width}{label width in inch}
 
@@ -50,6 +51,8 @@ It is used to determine string width.}
 \item{useMarkdown}{whether treat ** quotes as markdown (only support fontfaces)}
 
 \item{barcode_scale}{0-1, scale barcode plot inside the barcode drawing area}
+
+\item{font_col}{font color, default "black"}
 }
 \value{
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'

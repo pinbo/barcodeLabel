@@ -4,7 +4,7 @@
 #' and left QR code + right text for matrix barcodes.
 #' @param barcode_text a vector of strings for generating barcodes
 #' @param print_text a vector of strings for printing on the label (could use "\\n" for line break)
-#' @param barcode_type "linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)
+#' @param barcode_type "null" for no barcode needed, "linear" for code128, "qr" for QR code, and "dm" for datamatrix (ecc200)
 #' @param label_width label width in inch
 #' @param label_height label height in inch
 #' @param label_margin 0-1, margin proportion of the short side (label height)
@@ -17,6 +17,7 @@
 #' @param ecl error correction value for matrix labels only (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%)
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
 #' @param barcode_scale 0-1, scale barcode plot inside the barcode drawing area
+#' @param font_col font color, default "black"
 #'
 #' @return a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 #' @export
@@ -77,9 +78,14 @@ simple_label_layout = function(
     barcode_height = ifelse(barcode_type=="linear", 0.5, 1), # barcode height proportion
     ecl = 1, # error correction level for QR code.  1-4 (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%).
     useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
-    barcode_scale = 1 # 0-1, scale barcode inside the barcode area
+    barcode_scale = 1, # 0-1, scale barcode inside the barcode area
+    font_col = "black" # text color
 ){
-  if (length(barcode_text) == 0) stop("barcode_text is NULL! Nothing to do.")
+  if (length(barcode_text) == 0 & is.null(print_text)) stop("barcode_text and print_text are NULL! Nothing to do.")
+  if (is.null(barcode_text)){
+    barcode_type = "null"
+    barcode_height = 0
+  }
   if (!is.null(print_text)){
     if (is.null(line_number)){
       line_number = nchar(gsub("[^\n]", "", print_text[1])) + 1 # number of lines
@@ -109,7 +115,26 @@ simple_label_layout = function(
   # textsizes = sapply(normaltext, function(x) getxy2(x, unit="inch", gp=gpar(fontsize=Fsz, fontfamily=fontfamily, fontface=4))) # use fontface4 to get the max width
   # max_text_width = max(textsizes[1,])
   cat("max_text_width is", max_text_width, "\n")
-  if(barcode_type == "linear"){
+  if(barcode_type == "null"){
+    text_width = label_width - 2*label_margin_inch
+    Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    cat("Final Font size used is", Fsz, "\n")
+    # view port list
+    vp_list = list(
+      text_vp = grid::viewport(
+        x = grid::unit(label_margin_inch , "in"),
+        y = grid::unit(label_margin_inch, "in"),
+        width  = grid::unit( label_width - 2*label_margin_inch, "in"),
+        height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
+        just = c("left", "bottom"),
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
+      )
+    )
+    # content list
+    content_list = list(
+      text = print_text
+    )
+  } else if(barcode_type == "linear"){
     text_width = label_width - 2*label_margin_inch
     Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
     cat("Final Font size used is", Fsz, "\n")
@@ -129,7 +154,7 @@ simple_label_layout = function(
         width  = grid::unit( label_width - 2*label_margin_inch, "in"),
         height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
         just = if (barcode_on_top) c("left", "bottom") else c("left", "top"),
-        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8)
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
       )
     )
     # content list
@@ -155,7 +180,7 @@ simple_label_layout = function(
         width = grid::unit(label_width - barcode_height * label_height, "in"), 
         height = grid::unit( (1 - 2*label_margin) * label_height, "in"), 
         just=c("left", "center"),
-        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8)
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
       )
     )
     # content list
@@ -166,7 +191,7 @@ simple_label_layout = function(
         code = code,
       text = print_text
     )
-  } else {stop("Barcode type must be linear or matrix")}
+  } else {stop("Barcode type must be null, linear, qr or dm")}
   
   return(list(vp_list=vp_list, content_list=content_list))
 }

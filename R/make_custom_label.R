@@ -2,7 +2,7 @@
 #'
 #' @param label_number # how many labels to print.
 #' @param name pdf output name (no ".pdf)
-#' @param label_type Presets for label type "avery5967" (1.75" x 0.5") or "avery5960" (2.63" x 1"). Default is NULL so you can change the page size and lable size parameters.
+#' @param label_type Presets for label type "avery5967" (1.75" x 0.5") or "avery5960" (2.63" x 1") or  "tough-spots-3/8inch" (USA Scientific TOUGH-SPOTS LABELS ON SHEETS cat# 9185-1000 to 9185-1008 3/8 inch diameter). Default is NULL so you can change the page size and label size parameters.
 #' @param Across logical. When TRUE, print labels across rows, left to right. When FALSE, print labels down columns, top to bottom.
 #' @param ERows number of rows to skip
 #' @param ECols number of columns to skip
@@ -100,7 +100,6 @@ make_custom_label <- function(
     height_margin = 0.5, # top margin in inch
     label_width = 1.75, # label width in inch
     label_height = 0.5, # label height in inch
-    font_size = 12, # maximum font size, will be adjusted smaller to fit area
     fontfamily = "mono", # "mono", "sans", "serif"
     showborder = FALSE, # whether to show border of labels
     vp_list = NULL,
@@ -123,6 +122,16 @@ make_custom_label <- function(
       height_margin=0.5
       label_width=2.63
       label_height=1
+    } else if (label_type == "tough-spots-3/8inch"){
+      # USA Scientific TOUGH-SPOTS® LABELS ON SHEETS cat# 9185-1000 to 9185-1008
+      # 3/8 inch diameter
+      numrow=16
+      numcol=12
+      width_margin=0.5625 # 9/16 inch
+      height_margin=0.578125 # 9.25/16 inch
+      label_width=0.375 # 3/8 diameter
+      label_height=0.375
+      page_width = 8.4375 # 8 7/16 inch
     } else {
       cat("Unknown label type!! It now only has preset label sizes for avery5960 and avery5967.\nPlease set the label size manually.\n")
     }
