@@ -24,6 +24,7 @@ make_custom_label(
   label_height = 0.5,
   fontfamily = "mono",
   showborder = FALSE,
+  border_type = "rectangle",
   vp_list = NULL,
   content_list = NULL,
   text_align = "center",
@@ -81,6 +82,8 @@ preview_label(
 \item{fontfamily}{font family ("mono", "sans", "serif") or specific font based on your operation system.}
 
 \item{showborder}{logical: whether to show border of labels. Set to TRUE to check whether everything fit in the label area.}
+
+\item{border_type}{rectangle, circle, or both}
 
 \item{vp_list}{a list of grid viewports for how to layout elements on the label}
 

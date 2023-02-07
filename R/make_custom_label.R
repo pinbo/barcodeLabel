@@ -16,6 +16,7 @@
 #' @param label_height label height in inch
 #' @param fontfamily font family ("mono", "sans", "serif") or specific font based on your operation system.
 #' @param showborder logical: whether to show border of labels. Set to TRUE to check whether everything fit in the label area.
+#' @param border_type rectangle, circle, or both
 #' @param vp_list a list of grid viewport list for user designed label area layout (positions of rectangles on the label)
 #' @param content_list a list of contents to fill in the label area layout
 #' @param text_align left, right, or center alignment for text.
@@ -102,6 +103,7 @@ make_custom_label <- function(
     label_height = 0.5, # label height in inch
     fontfamily = "mono", # "mono", "sans", "serif"
     showborder = FALSE, # whether to show border of labels
+    border_type = "rectangle", # rectangle, circle, or both
     vp_list = NULL,
     content_list = NULL,
     text_align = "center", # left or center
@@ -206,7 +208,14 @@ make_custom_label <- function(
     }
     # grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
     grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y*2-1, layout.pos.col=lab_pos$x*2-1))
-    if (showborder) grid::grid.rect()
+    if (showborder) {
+      if (border_type == "rectangle") grid::grid.rect()
+      else if (border_type == "circle") grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, "inches"))
+      else { # both
+        grid::grid.rect()
+        grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, "inches"))
+      }
+    }
     # draw barcodes
     if (length(vp_list) > 0){
       for (j in 1:length(vp_list)){
