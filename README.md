@@ -64,6 +64,7 @@ barcode_type="matrix", Fsz=12, label_type = "avery5967", showborder = T,
 barcode_height = 1, fontfamily = "sans")
 ```
 ## Updates
+- 2023-02-12: v0.7.0. Added string wrap support. You can still manually set a small font size to fit all inital strings in one line.
 - 2023-02-04: v0.6.0. Make exact layout of labels on the page; add font color and only text option; add "tough-spots-3/8inch" preset; and circle border.
 - 2022-11-23: v0.5.0. Replace Data Matrix C code from [Datamatrix](https://github.com/revk/Datamatrix) with C code from [iec16022](https://github.com/rdoeffinger/iec16022) due to a bug with long strings.
 - 2022-11-15: v0.4.0. Add Data Matrix code and scaling for 2D barcode.

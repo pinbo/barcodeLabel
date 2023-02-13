@@ -94,8 +94,8 @@ simple_label_layout = function(
   }
   text_height = ifelse(barcode_type=="linear", 1 - barcode_height, 1)
   text_height_inch = (1-2*label_margin) * label_height * text_height
-  Fsz = ifelse(font_size * line_number > text_height_inch * 72, text_height_inch * 72 / line_number, font_size)
-  cat("Font size used is", Fsz, "\n")
+  # Fsz = ifelse(font_size * line_number > text_height_inch * 72, text_height_inch * 72 / line_number, font_size)
+  # cat("Font size used is", Fsz, "\n")
   # use the shorter one as label margin in inch
   short_side = ifelse(label_height < label_width, label_height, label_width)
   label_margin_inch = label_margin * short_side
@@ -107,17 +107,20 @@ simple_label_layout = function(
     normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
     fontface = 4
   }
-  pdf(NULL) # and this could be opened with additional parameters
-  par(ps = Fsz, family = fontfamily, font=fontface)
-  max_text_width = max(strwidth(normaltext, units = 'in'))
-  dev.off()
+  # pdf(NULL) # and this could be opened with additional parameters
+  # par(ps = Fsz, family = fontfamily, font=fontface)
+  # max_text_width = max(strwidth(normaltext, units = 'in'))
+  # dev.off()
   # normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T) else print_text
   # textsizes = sapply(normaltext, function(x) getxy2(x, unit="inch", gp=gpar(fontsize=Fsz, fontfamily=fontfamily, fontface=4))) # use fontface4 to get the max width
   # max_text_width = max(textsizes[1,])
-  cat("max_text_width is", max_text_width, "\n")
+  # cat("max_text_width is", max_text_width, "\n")
   if(barcode_type == "null"){
     text_width = label_width - 2*label_margin_inch
-    Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    print_text = tt$text
+    Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
     # view port list
     vp_list = list(
@@ -136,7 +139,10 @@ simple_label_layout = function(
     )
   } else if(barcode_type == "linear"){
     text_width = label_width - 2*label_margin_inch
-    Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    print_text = tt$text
+    Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
     # view port list
     vp_list = list(
@@ -165,7 +171,10 @@ simple_label_layout = function(
   } else if (barcode_type =="qr" | barcode_type =="dm"){
     text_width = label_width - barcode_height * label_height
     cat("text_width is ", text_width, "\n")
-    Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
+    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    print_text = tt$text
+    Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
     vp_list = list(
       code_vp = grid::viewport(
