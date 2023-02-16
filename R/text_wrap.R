@@ -32,10 +32,10 @@ word_split2 = function(str){ # for markdown text split
 #' str_vec = word_split(text)
 #' new_text = str_wrap_inch(str_vec, width = 1.2)
 #' cat(new_text)
-str_wrap_inch = function(str_vec, width){# t2 is split word vector from word_split
+str_wrap_inch = function(str_vec, width, gp = grid::gpar(), unit = "in"){# t2 is split word vector from word_split
   tmp = 0
   t2 = str_vec
-  sl2 = strwidth(t2, units = "in") # get the width of each word
+  sl2 = mystrwidth(t2, gp, unit) # get the width of each word
   newline_pos = c()
   for ( i in 1:length(t2) ){
     tmp = tmp + sl2[i]
@@ -76,21 +76,21 @@ text_box_wrap = function(text, font_size, box_width, box_height, fontfamily = "s
   text0 = text # original text
   if (useMarkdown) text = gsub("(\\*+)((.|\n)+?)\\1", "\\2", text, perl = T)
   text2 = word_split(text)
-  pdf(NULL) # and this could be opened with additional parameters
-  par(ps = font_size, family = fontfamily, font=4)
-  max_text_width = max( strwidth(text2, units = "in") )
+  # pdf(NULL) # and this could be opened with additional parameters
+  # par(ps = font_size, family = fontfamily, font=4)
+  max_text_width = max( mystrwidth(text2, gp = gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4)) )
   if (max_text_width > box_width) font_size = floor(box_width/max_text_width*font_size)
-  text3 = str_wrap_inch(text2, box_width)
+  text3 = str_wrap_inch(text2, box_width, gp = gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
   line_number = nchar(gsub("[^\n]", "", text3$text)) + 1 # number of lines
   while (font_size * line_number > box_height * 72){
     font_size = font_size - 0.5
     par(ps = font_size, family = fontfamily, font=4)
-    max_text_width = max( strwidth(text2, units = "in") )
+    max_text_width = max( mystrwidth(text2, gp = gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4)) )
     if (max_text_width > box_width) font_size = floor(box_width/max_text_width*font_size)
-    text3 = str_wrap_inch(text2, box_width)
+    text3 = str_wrap_inch(text2, box_width, gp = gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
     line_number = nchar(gsub("[^\n]", "", text3$text)) + 1 # number of lines
   }
-  dev.off()
+  # dev.off()
   if (useMarkdown) {
     text4 = word_split2(text0)
     for (i in text3$newline_pos) text4[i] = paste0(text4[i], "\n")

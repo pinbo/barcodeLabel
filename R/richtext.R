@@ -164,3 +164,7 @@ getxy2 = function(text, gp = grid::gpar(), unit="pt"){
   return(list(x=w2, y=h2))
 }
 
+## only get width of text vector
+mystrwidth = function(text, gp = grid::gpar(), unit="inch"){
+  sapply(text, function(x) getxy2(x, gp, unit)$x)
+}

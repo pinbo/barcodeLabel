@@ -4,7 +4,7 @@
 \alias{str_wrap_inch}
 \title{A function to wrap string for width (inch) limit}
 \usage{
-str_wrap_inch(str_vec, width)
+str_wrap_inch(str_vec, width, gp = grid::gpar(), unit = "in")
 }
 \arguments{
 \item{str_vec}{a vector of split words vector from word_split}

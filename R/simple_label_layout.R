@@ -97,14 +97,14 @@ simple_label_layout = function(
   # Fsz = ifelse(font_size * line_number > text_height_inch * 72, text_height_inch * 72 / line_number, font_size)
   # cat("Font size used is", Fsz, "\n")
   # use the shorter one as label margin in inch
-  short_side = ifelse(label_height < label_width, label_height, label_width)
+  short_side = min(label_height, label_width)
   label_margin_inch = label_margin * short_side
   ## get vp_list and content_list
   # x cannot be center because the label layout width is different for columns
   # normaltext = print_text
   # fontface = 4
   # if(useMarkdown){
-  #   normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
+  #   normaltext = gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
   #   fontface = 4
   # }
   # pdf(NULL) # and this could be opened with additional parameters
@@ -169,7 +169,7 @@ simple_label_layout = function(
       text = print_text
     )
   } else if (barcode_type =="qr" | barcode_type =="dm"){
-    text_width = label_width - barcode_height * label_height
+    text_width = label_width - barcode_height * short_side - label_margin_inch
     cat("text_width is ", text_width, "\n")
     # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
     tt = text_array_wrap(print_text, font_size, text_width, text_height_inch, fontfamily, useMarkdown)
