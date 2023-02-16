@@ -70,6 +70,7 @@ str_wrap_inch = function(str_vec, width){# t2 is split word vector from word_spl
 #' font_size = 10
 #' text_box_wrap(text, font_size, box_width, box_height, "mono")
 text_box_wrap = function(text, font_size, box_width, box_height, fontfamily = "sans", useMarkdown = FALSE){
+  if (text == "") return( c(text = text, font_size = font_size) )
   line_number = nchar(gsub("[^\n]", "", text)) + 1 # number of lines
   font_size = ifelse(font_size * line_number > box_height * 72, box_height * 72 / line_number, font_size)
   text0 = text # original text
