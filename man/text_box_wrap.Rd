@@ -4,7 +4,14 @@
 \alias{text_box_wrap}
 \title{Wrap text within a text box}
 \usage{
-text_box_wrap(text, font_size, box_width, box_height, fontfamily = "sans")
+text_box_wrap(
+  text,
+  font_size,
+  box_width,
+  box_height,
+  fontfamily = "sans",
+  useMarkdown = FALSE
+)
 }
 \arguments{
 \item{text}{a single string}
@@ -16,6 +23,8 @@ text_box_wrap(text, font_size, box_width, box_height, fontfamily = "sans")
 \item{box_height}{text box height in inch}
 
 \item{fontfamily}{font family ("mono", "sans", "serif") or specific font based on your operation system.}
+
+\item{useMarkdown}{TRUE or FALSE: whether to treat "*" as markdown symbols.}
 }
 \value{
 a vector with 2 elements: new string with "\n" added and the final adjusted font size

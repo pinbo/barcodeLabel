@@ -12,14 +12,14 @@ str_wrap_inch(str_vec, width)
 \item{width}{width limit in inch}
 }
 \value{
-a string with "\n" added between words. You can use `cat` to see the word wrap
+a list of 2 elements: a string with "\n" added between words (You can use `cat` to see the word wrap) and a vector of positions of newline added (which elements in str_vec were added "\n")
 }
 \description{
 A function to wrap string for width (inch) limit
 }
 \examples{
 text = "line1\na-long-text-line_long_long_long"
-str_vec = word_spit(text)
+str_vec = word_split(text)
 new_text = str_wrap_inch(str_vec, width = 1.2)
 cat(new_text)
 }

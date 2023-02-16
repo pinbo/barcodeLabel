@@ -3,14 +3,15 @@
 \name{text_array_wrap}
 \alias{text_array_wrap}
 \title{Wrap a vector of strings to fit a text box.
-Just a vector function of "text_box_wrap"}
+Just a vectorized function of "text_box_wrap"}
 \usage{
 text_array_wrap(
   text_array,
   font_size = 12,
   box_width,
   box_height,
-  fontfamily = "sans"
+  fontfamily = "sans",
+  useMarkdown = FALSE
 )
 }
 \arguments{
@@ -23,15 +24,17 @@ text_array_wrap(
 \item{box_height}{text box height in inch}
 
 \item{fontfamily}{font family ("mono", "sans", "serif") or specific font based on your operation system.}
+
+\item{useMarkdown}{TRUE or FALSE: whether to treat "*" as markdown symbols.}
 }
 \value{
 a list of 2 elements: a vector of wrapped string and the final font size.
 }
 \description{
 Wrap a vector of strings to fit a text box.
-Just a vector function of "text_box_wrap"
+Just a vectorized function of "text_box_wrap"
 }
 \examples{
-ss = c("a very long long string", "another-long-long-string")
-text_array_wrap(ss, 12, 1, 0.5)
+ss = c("a very **long** long string", "another-long-long-string")
+text_array_wrap(ss, 12, 1, 0.5, useMarkdown=T)
 }

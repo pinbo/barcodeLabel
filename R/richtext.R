@@ -66,26 +66,23 @@ richtext = function(txt, x=0.5, y=0.5, gp = grid::gpar(), unit="npc", hjust=0.5,
 seprichlines = function(txt){ 
   txtpieces = strsplit(txt, "\n")[[1]]
   if (length(txtpieces)>1){ # if there is newline
-    nn = gregexpr('\n', txt)[[1]] # newline positions
-    bb = gregexpr('\\*+', txt)[[1]] # individual star quotes
+    nn = gregexpr('\n+', txt)[[1]] # newline positions
+    bb = gregexpr("(\\*+)((.|\n)+?)\\1", txt, perl = T)[[1]] # quote pairs
     bblen = attributes(bb)$match.length
+    bb_end = bb + bblen - 1 # quote ending positions
+    bb_star_len = attributes(bb)$capture.length[,1]
     t1 = sapply(nn, function(x){
-      mm = which(bb>x)
-      if (length(mm) > 0) min(mm)
-      else 1 # only even number are inside *quotes, so give 1 means not inside
-    })
-    newlinepos = which(t1%%2==0)
-    if (length(newlinepos)>0){# if any newlines are inside the * quotes
-      bblenpos = t1[t1%%2==0]/2
-      nbblen = length(bblen)
-      nstar2add = sapply(seq(2, nbblen, 2), function(x){
-        min(bblen[x], bblen[x-1])
-      })
-      for (i in 1:length(newlinepos)){
-        txtpos = newlinepos[i]
-        ss = paste0(rep("*", nstar2add[i]),  collapse = "")
-        txtpieces[txtpos] = paste0(txtpieces[txtpos], ss)
-        txtpieces[txtpos+1] = paste0(ss, txtpieces[txtpos+1])
+      xx = bb < x
+      yy = bb_end > x
+      zz = which(xx & yy)
+      ifelse( length(zz) > 0, bb_star_len[zz], 0)
+    }) # return a vector of nstar to add
+    if (sum(t1)>0){# if any newlines are inside the * quotes
+      pp = which(t1 > 0) # which newline are in quotes
+      for ( i in pp ){
+        ss = paste0(rep("*", t1[i]),  collapse = "")
+        txtpieces[i] = paste0(txtpieces[i],ss)
+        txtpieces[i+1] = paste0(ss, txtpieces[i+1])
       }
     }
   }

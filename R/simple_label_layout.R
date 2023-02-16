@@ -101,12 +101,12 @@ simple_label_layout = function(
   label_margin_inch = label_margin * short_side
   ## get vp_list and content_list
   # x cannot be center because the label layout width is different for columns
-  normaltext = print_text
-  fontface = 4
-  if(useMarkdown){
-    normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
-    fontface = 4
-  }
+  # normaltext = print_text
+  # fontface = 4
+  # if(useMarkdown){
+  #   normaltext = if(useMarkdown) gsub("(\\*+)((.|\n)+?)\\1", "\\2", print_text, perl = T)
+  #   fontface = 4
+  # }
   # pdf(NULL) # and this could be opened with additional parameters
   # par(ps = Fsz, family = fontfamily, font=fontface)
   # max_text_width = max(strwidth(normaltext, units = 'in'))
@@ -118,7 +118,7 @@ simple_label_layout = function(
   if(barcode_type == "null"){
     text_width = label_width - 2*label_margin_inch
     # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
-    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    tt = text_array_wrap(print_text, font_size, text_width, text_height_inch, fontfamily, useMarkdown)
     print_text = tt$text
     Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
@@ -140,7 +140,7 @@ simple_label_layout = function(
   } else if(barcode_type == "linear"){
     text_width = label_width - 2*label_margin_inch
     # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
-    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    tt = text_array_wrap(print_text, font_size, text_width, text_height_inch, fontfamily, useMarkdown)
     print_text = tt$text
     Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
@@ -172,7 +172,7 @@ simple_label_layout = function(
     text_width = label_width - barcode_height * label_height
     cat("text_width is ", text_width, "\n")
     # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
-    tt = text_array_wrap(normaltext, font_size, text_width, text_height_inch, fontfamily)
+    tt = text_array_wrap(print_text, font_size, text_width, text_height_inch, fontfamily, useMarkdown)
     print_text = tt$text
     Fsz = tt$font_size
     cat("Final Font size used is", Fsz, "\n")
