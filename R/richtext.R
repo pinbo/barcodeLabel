@@ -93,7 +93,6 @@ seprichlines = function(txt){
 # return a list for split text pieces and corresponding fontfaces
 getfontface = function(txt){
   # txt = "a *abc* ef **d*** e"
-  nc = nchar(txt)
   aa=gregexpr("(\\*+)((.|\n)+?)\\1", txt, perl = T)[[1]] # match newlines too
   star2font = c(0,2,1,3) # number of * for normal, bold, italic, and bold italic
   if (aa[1] < 0) return(list(txt=txt, font=1))
@@ -104,11 +103,16 @@ getfontface = function(txt){
     bb[bb%%2==0] = 2 # in case >3 stars
     bb[bb%%2==1&bb>3] = 3 # in case >3 stars
     bbfont = sapply(bb, function(x) which(star2font == x))
-    for (i in bbfont) fontc = c(fontc, i, 1) # add 1 on the right of each pair, which might cause 1 more 1 at the end
+    cc = attributes(aa)$match.length
+    dd = c(aa, nchar(txt)+1) # add length of text as next fontface start
+    for (i in 1:length(aa) ){
+      if (dd[i+1] - dd[i] == cc[i]) fontc = c(fontc, bbfont[i])
+      else fontc = c(fontc, bbfont[i], 1)
+    }
     # get split text
-    txt0 = gsub("(\\*+)((.|\n)+?)\\1(\\**)", "__xx__\\2\\4__xx__", txt, perl = T) # match newlines too
+    txt0 = gsub("(\\*+)((.|\n)+?)\\1", "__xx__\\2__xx__", txt, perl = T) # match newlines too
     txtpieces = strsplit(txt0, "__xx__")[[1]]
-    if(txtpieces[1]=="") txtpieces = txtpieces[-1]
+    txtpieces = txtpieces[txtpieces!=""]
     return(list(txt=txtpieces, font=fontc[1:length(txtpieces)])) # the last 1 might be extra
   }
 }
