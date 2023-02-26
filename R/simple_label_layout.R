@@ -18,6 +18,7 @@
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
 #' @param barcode_scale 0-1, scale barcode plot inside the barcode drawing area
 #' @param font_col font color, default "black"
+#' @param fontface The specification of fontface: 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.
 #'
 #' @return a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 #' @export
@@ -79,7 +80,8 @@ simple_label_layout = function(
     ecl = 1, # error correction level for QR code.  1-4 (1 = Low (7\%), 2 = Medium (15\%), 3 = Quantile (25\%), 4 = High (30\%).
     useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
     barcode_scale = 1, # 0-1, scale barcode inside the barcode area
-    font_col = "black" # text color
+    font_col = "black", # text color
+    fontface = 1
 ){
   if (length(barcode_text) == 0 & is.null(print_text)) stop("barcode_text and print_text are NULL! Nothing to do.")
   if (is.null(barcode_text)){
@@ -130,7 +132,7 @@ simple_label_layout = function(
         width  = grid::unit( label_width - 2*label_margin_inch, "in"),
         height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
         just = c("left", "bottom"),
-        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )
     )
     # content list
@@ -160,7 +162,7 @@ simple_label_layout = function(
         width  = grid::unit( label_width - 2*label_margin_inch, "in"),
         height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
         just = if (barcode_on_top) c("left", "bottom") else c("left", "top"),
-        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )
     )
     # content list
@@ -189,7 +191,7 @@ simple_label_layout = function(
         width = grid::unit(label_width - barcode_height * label_height, "in"), 
         height = grid::unit( (1 - 2*label_margin) * label_height, "in"), 
         just=c("left", "center"),
-        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col)
+        gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )
     )
     # content list

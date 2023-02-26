@@ -19,7 +19,8 @@ simple_label_layout(
   ecl = 1,
   useMarkdown = FALSE,
   barcode_scale = 1,
-  font_col = "black"
+  font_col = "black",
+  fontface = 1
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ It is used to determine string width.}
 \item{barcode_scale}{0-1, scale barcode plot inside the barcode drawing area}
 
 \item{font_col}{font color, default "black"}
+
+\item{fontface}{The specification of fontface: 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.}
 }
 \value{
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
