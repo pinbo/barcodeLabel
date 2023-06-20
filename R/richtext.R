@@ -95,22 +95,13 @@ getfontface = function(txt){
   txt0 = txt
   txt = gsub("_","-oxo-",txt) # replace all underscore to -oxo-
   
-  aa = gregexpr("(\\*\\*\\*)((.|\n)+?)\\1(?!\\*)", txt, perl = T)[[1]]
+  aa = gregexpr("(\\*\\*)((.|\n)+?)\\1(?!\\*)", txt, perl = T)[[1]]
   bb = attributes(aa)$capture.length[,1]
   cc = attributes(aa)$match.length
   
-  txt2 = gsub("(\\*\\*\\*)((.|\n)+?)\\1(?!\\*)","___\\2___",txt,perl=T)
-  aa2 = gregexpr("(\\*\\*)((.|\n)+?)\\1(?!\\*)", txt2, perl = T)[[1]]
-  bb2=attributes(aa2)$capture.length[,1]
-  cc2 = attributes(aa2)$match.length
-  
-  aa = c(aa, aa2)
-  bb = c(bb, bb2)
-  cc = c(cc, cc2)
-  
-  txt2 = gsub("(\\*\\*)((.|\n)+?)\\1(?!\\*)","__\\2__",txt2, perl=T)
+  txt2 = gsub("(\\*\\*)((.|\n)+?)\\1(?!\\*)","__\\2__",txt, perl=T)
   aa2 = gregexpr("(\\*)((.|\n)+?)\\1(?!\\*)", txt2, perl = T)[[1]]
-  bb2=attributes(aa2)$capture.length[,1]
+  bb2 = attributes(aa2)$capture.length[,1]
   cc2 = attributes(aa2)$match.length
   
   aa = c(aa, aa2)
@@ -133,7 +124,7 @@ getfontface = function(txt){
   font = 1
   rightend = 1
   nstar = 0
-  # dd = c(aa, nchar(txt)+1) # add length of text as next fontface start
+  dd = c(aa, nchar(txt)+1) # add length of text as next fontface start
   for (i in 1:length(aa) ){
     current.end = aa[i]+cc[i]-1
     if (current.end < rightend) {
@@ -144,7 +135,7 @@ getfontface = function(txt){
       rightend = current.end
       nstar = bb[i]
       font = bbfont[bb[i]]
-      fontc = c(fontc, font)
+      if (aa[i]+nstar<dd[i+1]) fontc = c(fontc, font)
     }
   }
   if (rightend < nchar(txt)) fontc = c(fontc,1)
