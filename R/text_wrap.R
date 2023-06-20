@@ -74,7 +74,10 @@ text_box_wrap = function(text, font_size, box_width, box_height, fontfamily = "s
   line_number = nchar(gsub("[^\n]", "", text)) + 1 # number of lines
   font_size = ifelse(font_size * line_number > box_height * 72, box_height * 72 / line_number, font_size)
   text0 = text # original text
-  if (useMarkdown) text = gsub("(\\*+)((.|\n)+?)\\1", "\\2", text, perl = T)
+  if (useMarkdown) {
+    text = gsub("(\\*+)((.|\n)+?)\\1", "\\2", text, perl = T)
+    text = gsub("(\\*+)((.|\n)+?)\\1", "\\2", text, perl = T) # in case of nested *
+    }
   text2 = word_split(text)
   # pdf(NULL) # and this could be opened with additional parameters
   # par(ps = font_size, family = fontfamily, font=4)
