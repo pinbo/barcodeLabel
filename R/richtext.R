@@ -92,29 +92,69 @@ seprichlines = function(txt){
 ## split a rich line by fontfaces
 # return a list for split text pieces and corresponding fontfaces
 getfontface = function(txt){
-  # txt = "a *abc* ef **d*** e"
-  aa=gregexpr("(\\*+)((.|\n)+?)\\1", txt, perl = T)[[1]] # match newlines too
-  star2font = c(0,2,1,3) # number of * for normal, bold, italic, and bold italic
-  if (aa[1] < 0) return(list(txt=txt, font=1))
-  else { # at least 1 pair of * quote
-    fontc = c()
-    if(aa[1]!=1) fontc = 1
-    bb=attributes(aa)$capture.length[,1] # number of star in each pair (left=right)
-    bb[bb%%2==0] = 2 # in case >3 stars
-    bb[bb%%2==1&bb>3] = 3 # in case >3 stars
-    bbfont = sapply(bb, function(x) which(star2font == x))
-    cc = attributes(aa)$match.length
-    dd = c(aa, nchar(txt)+1) # add length of text as next fontface start
-    for (i in 1:length(aa) ){
-      if (dd[i+1] - dd[i] == cc[i]) fontc = c(fontc, bbfont[i])
-      else fontc = c(fontc, bbfont[i], 1)
+  txt0 = txt
+  txt = gsub("_","-oxo-",txt) # replace all underscore to -oxo-
+  
+  aa = gregexpr("(\\*\\*\\*)((.|\n)+?)\\1(?!\\*)", txt, perl = T)[[1]]
+  bb = attributes(aa)$capture.length[,1]
+  cc = attributes(aa)$match.length
+  
+  txt2 = gsub("(\\*\\*\\*)((.|\n)+?)\\1(?!\\*)","___\\2___",txt,perl=T)
+  aa2 = gregexpr("(\\*\\*)((.|\n)+?)\\1(?!\\*)", txt2, perl = T)[[1]]
+  bb2=attributes(aa2)$capture.length[,1]
+  cc2 = attributes(aa2)$match.length
+  
+  aa = c(aa, aa2)
+  bb = c(bb, bb2)
+  cc = c(cc, cc2)
+  
+  txt2 = gsub("(\\*\\*)((.|\n)+?)\\1(?!\\*)","__\\2__",txt2, perl=T)
+  aa2 = gregexpr("(\\*)((.|\n)+?)\\1(?!\\*)", txt2, perl = T)[[1]]
+  bb2=attributes(aa2)$capture.length[,1]
+  cc2 = attributes(aa2)$match.length
+  
+  aa = c(aa, aa2)
+  bb = c(bb, bb2)
+  cc = c(cc, cc2)
+  
+  aa = aa[aa>0]
+  if (length(aa[aa>0]) == 0) return(list(txt=txt0, font=1))
+  bb = bb[bb>0]
+  cc = cc[cc>0]
+  
+  oo = order(aa)
+  aa = aa[oo]
+  bb = bb[oo]
+  cc = cc[oo]
+  
+  bbfont = c(3,2,4)
+  fontc = c()
+  
+  font = 1
+  rightend = 1
+  nstar = 0
+  # dd = c(aa, nchar(txt)+1) # add length of text as next fontface start
+  for (i in 1:length(aa) ){
+    current.end = aa[i]+cc[i]-1
+    if (current.end < rightend) {
+      fontc = c(fontc, font+2)
+      if (rightend - current.end > nstar) fontc =  c(fontc, font)
+    } else {
+      if (aa[i] - rightend > 1) fontc =  c(fontc, 1)
+      rightend = current.end
+      nstar = bb[i]
+      font = bbfont[bb[i]]
+      fontc = c(fontc, font)
     }
-    # get split text
-    txt0 = gsub("(\\*+)((.|\n)+?)\\1", "__xx__\\2__xx__", txt, perl = T) # match newlines too
-    txtpieces = strsplit(txt0, "__xx__")[[1]]
-    txtpieces = txtpieces[txtpieces!=""]
-    return(list(txt=txtpieces, font=fontc[1:length(txtpieces)])) # the last 1 might be extra
   }
+  if (rightend < nchar(txt)) fontc = c(fontc,1)
+
+  fontc[fontc >4] = 4
+  txt2 = gsub("(\\*)((.|\n)+?)\\1(?!\\*)","_\\2_",txt2,perl=T)
+  txtpieces = strsplit(txt2, "_+")[[1]]
+  txtpieces = txtpieces[txtpieces!=""]
+  txtpieces = gsub("-oxo-", "_", txtpieces)
+  return(list(txt=txtpieces, font=fontc[1:length(txtpieces)])) # the last 1 might be extra
 }
 
 
