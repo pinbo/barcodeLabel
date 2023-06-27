@@ -119,6 +119,10 @@ text_box_wrap = function(text, font_size, box_width, box_height, fontfamily = "s
 #' ss = c("a very **long** long string", "another-long-long-string")
 #' text_array_wrap(ss, 12, 1, 0.5, useMarkdown=T)
 text_array_wrap = function(text_array, font_size=12, box_width, box_height, fontfamily = "sans", useMarkdown = FALSE){
-  dd2 = t(sapply(text_array, text_box_wrap, font_size, box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
-  list(text = dd2[,1], font_size = min(as.numeric(dd2[,2])))
+  # w1 = mystrwidth(text_array, gp = grid::gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
+  f1 = text_box_wrap(text_array[1], font_size, box_width, box_height, fontfamily, useMarkdown)
+  cat("Initial font is", f1[2], "\n")
+  dd2 = t(sapply(text_array[-1], text_box_wrap, as.numeric(f1[2]), box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
+  # dd2 = t(sapply(text_array, text_box_wrap, font_size, box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
+  list(text = c(f1[1], dd2[,1]), font_size = min(as.numeric(dd2[,2])))
 }
