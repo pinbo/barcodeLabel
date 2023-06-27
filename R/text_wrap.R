@@ -89,8 +89,8 @@ text_box_wrap = function(text, font_size, box_width, box_height, fontfamily = "s
     font_size = font_size - 0.5
     # par(ps = font_size, family = fontfamily, font=4)
     max_text_width = max( mystrwidth(text2, gp = grid::gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4)) )
-    if (max_text_width > box_width) # font_size = floor(box_width/max_text_width*font_size)
-      text3 = str_wrap_inch(text2, box_width, gp = grid::gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
+    if (max_text_width > box_width) font_size = floor(box_width/max_text_width*font_size)
+    text3 = str_wrap_inch(text2, box_width, gp = grid::gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
     line_number = nchar(gsub("[^\n]", "", text3$text)) + 1 # number of lines
   }
   # dev.off()
