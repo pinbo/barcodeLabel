@@ -18,8 +18,8 @@ a list of 2 elements: a string with "\n" added between words (You can use `cat` 
 A function to wrap string for width (inch) limit
 }
 \examples{
-text = "line1\na-long-text-line_long_long_long"
+text = "line1\na-long-text-line_long_long_long abc"
 str_vec = word_split(text)
 new_text = str_wrap_inch(str_vec, width = 1.2)
-cat(new_text)
+cat(new_text$text)
 }
