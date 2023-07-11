@@ -4,7 +4,7 @@
 \alias{str_wrap_inch}
 \title{A function to wrap string for width (inch) limit}
 \usage{
-str_wrap_inch(str_vec, width, gp = grid::gpar(), unit = "in")
+str_wrap_inch(str_vec, width, gp = grid::get.gpar(), unit = "in")
 }
 \arguments{
 \item{str_vec}{a vector of split words vector from word_split}
@@ -20,6 +20,6 @@ A function to wrap string for width (inch) limit
 \examples{
 text = "line1\na-long-text-line_long_long_long abc"
 str_vec = word_split(text)
-new_text = str_wrap_inch(str_vec, width = 1.2)
+new_text = str_wrap_inch(str_vec, grid::gpar(fontsize=12), width = 1.2)
 cat(new_text$text)
 }
