@@ -61,7 +61,7 @@ SEXP qrcode2(SEXP text, SEXP errCor) {
         int ll = size + 2 * border;
         SEXP qr = PROTECT(allocMatrix(INTSXP, ll, ll));
         int *pout = INTEGER(qr);
-        // printf("QR code dimension is %d * %d\n", ll, ll);
+        printf("Size    : %dx%d\n", size, size);
         int i = 0;
         for (int y = -border; y < size + border; y++) {
             for (int x = -border; x < size + border; x++) {
