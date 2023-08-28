@@ -33,6 +33,7 @@ word_split2 = function(str){ # for markdown text split
 #' new_text = str_wrap_inch(str_vec, grid::gpar(fontsize=12), width = 1.2)
 #' cat(new_text$text)
 str_wrap_inch = function(str_vec, width, gp = grid::get.gpar(), unit = "in"){# t2 is split word vector from word_split
+  if(length(str_vec)==1) return(list(text = str_vec[1], newline_pos = c()))
   t2 = str_vec
   sl2 = mystrwidth(t2, gp, unit) # get the width of each word
   max_text_width = max(sl2)
@@ -130,7 +131,11 @@ text_array_wrap = function(text_array, font_size=12, box_width, box_height, font
   # w1 = mystrwidth(text_array, gp = grid::gpar(fontsize=font_size, fontfamily=fontfamily, fontface=4))
   f1 = text_box_wrap(text_array[1], font_size, box_width, box_height, fontfamily, useMarkdown)
   cat("Initial font is", f1[2], "\n")
-  dd2 = t(sapply(text_array[-1], text_box_wrap, as.numeric(f1[2]), box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
-  # dd2 = t(sapply(text_array, text_box_wrap, font_size, box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
-  list(text = c(f1[1], dd2[,1]), font_size = min(as.numeric(dd2[,2])))
+  if (length(text_array)>1){
+    dd2 = t(sapply(text_array[-1], text_box_wrap, as.numeric(f1[2]), box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
+    # dd2 = t(sapply(text_array, text_box_wrap, font_size, box_width, box_height, fontfamily, useMarkdown, USE.NAMES=F))
+    return(list(text = c(f1[1], dd2[,1]), font_size = min(as.numeric(dd2[,2]))))
+  } else {
+    return(list(text = f1[1], font_size = as.numeric(f1[2])))
+  }
 }
