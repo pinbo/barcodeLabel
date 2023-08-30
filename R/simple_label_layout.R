@@ -117,6 +117,7 @@ simple_label_layout = function(
   # textsizes = sapply(normaltext, function(x) getxy2(x, unit="inch", gp=gpar(fontsize=Fsz, fontfamily=fontfamily, fontface=4))) # use fontface4 to get the max width
   # max_text_width = max(textsizes[1,])
   # cat("max_text_width is", max_text_width, "\n")
+  pdf(file=NULL) # mystrwidth depends on the device.
   if(barcode_type == "null"){
     text_width = label_width - 2*label_margin_inch
     # Fsz = if (max_text_width > text_width) floor(text_width/max_text_width*Fsz) else Fsz
@@ -203,6 +204,7 @@ simple_label_layout = function(
       text = print_text
     )
   } else {stop("Barcode type must be null, linear, qr or dm")}
+  dev.off()
   
   return(list(vp_list=vp_list, content_list=content_list))
 }
