@@ -3,7 +3,6 @@
 export(code_128_make)
 export(dmcode)
 export(dmcode_make)
-export(makeLabel)
 export(make_custom_label)
 export(make_vp)
 export(plotqr)

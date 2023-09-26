@@ -28,7 +28,8 @@ make_custom_label(
   vp_list = NULL,
   content_list = NULL,
   text_align = "center",
-  useMarkdown = FALSE
+  useMarkdown = FALSE,
+  unit = "inch"
 )
 
 make_vp(
@@ -38,7 +39,8 @@ make_vp(
   height,
   just = c("left", "top"),
   font_size = 12,
-  line_number = 1
+  line_number = 1,
+  unit = "inch"
 )
 
 preview_label(
@@ -47,7 +49,8 @@ preview_label(
   vp_list,
   content_list,
   text_align = "center",
-  useMarkdown = FALSE
+  useMarkdown = FALSE,
+  unit = "inch"
 )
 }
 \arguments{
@@ -92,6 +95,8 @@ preview_label(
 \item{text_align}{text alignment (left, center, or right). Default is "center"}
 
 \item{useMarkdown}{whether treat ** quotes as markdown (only support fontfaces)}
+
+\item{unit}{unit to be used, such as inch, mm, cm etc}
 
 \item{x}{coordinate on the x axis}
 

@@ -20,7 +20,8 @@ simple_label_layout(
   useMarkdown = FALSE,
   barcode_scale = 1,
   font_col = "black",
-  fontface = 1
+  fontface = 1,
+  unit = "inch"
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ It is used to determine string width.}
 \item{font_col}{font color, default "black"}
 
 \item{fontface}{The specification of fontface: 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.}
+
+\item{unit}{unit to be used, such as inch, mm, cm etc}
 }
 \value{
 a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
