@@ -19,6 +19,7 @@
 #' @param barcode_scale 0-1, scale barcode plot inside the barcode drawing area
 #' @param font_col font color, default "black"
 #' @param fontface The specification of fontface: 1 = plain, 2 = bold, 3 = italic, 4 = bold italic.
+#' @param unit unit to be used, such as inch, mm, cm etc
 #'
 #' @return a list of label layout (vp_list) and content (content_list) for input of function "custom_label" parameters 'vp_list' and 'content_list'
 #' @export
@@ -81,7 +82,8 @@ simple_label_layout = function(
     useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
     barcode_scale = 1, # 0-1, scale barcode inside the barcode area
     font_col = "black", # text color
-    fontface = 1
+    fontface = 1,
+    unit = "inch" # unit to be used, such as inch, mm, cm etc
 ){
   if (length(barcode_text) == 0 & is.null(print_text)) stop("barcode_text and print_text are NULL! Nothing to do.")
   if (is.null(barcode_text)){
@@ -128,10 +130,10 @@ simple_label_layout = function(
     # view port list
     vp_list = list(
       text_vp = grid::viewport(
-        x = grid::unit(label_margin_inch , "in"),
-        y = grid::unit(label_margin_inch, "in"),
-        width  = grid::unit( label_width - 2*label_margin_inch, "in"),
-        height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
+        x = grid::unit(label_margin_inch , unit),
+        y = grid::unit(label_margin_inch, unit),
+        width  = grid::unit( label_width - 2*label_margin_inch, unit),
+        height = grid::unit( (label_height - 2*label_margin_inch) * text_height, unit), 
         just = c("left", "bottom"),
         gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )
@@ -150,18 +152,18 @@ simple_label_layout = function(
     # view port list
     vp_list = list(
       code_vp = grid::viewport(
-        x = grid::unit(0.01 , "in"),
-        y = if(barcode_on_top) grid::unit(label_height - label_margin_inch, "in") else grid::unit(label_margin_inch, "in"),
-        # width  = grid::unit(label_width - 2*label_margin_inch, "in"), 
-        width  = grid::unit(label_width*0.98, "in"), # look like code128 output already has white space on the end
-        height = grid::unit( (label_height - 2*label_margin_inch) * barcode_height, "in"),
+        x = grid::unit(0.01 , unit),
+        y = if(barcode_on_top) grid::unit(label_height - label_margin_inch, unit) else grid::unit(label_margin_inch, unit),
+        # width  = grid::unit(label_width - 2*label_margin_inch, unit), 
+        width  = grid::unit(label_width*0.98, unit), # look like code128 output already has white space on the end
+        height = grid::unit( (label_height - 2*label_margin_inch) * barcode_height, unit),
         just = if (barcode_on_top) c("left", "top") else c("left", "bottom")
       ),
       text_vp = grid::viewport(
-        x = grid::unit(label_margin_inch , "in"),
-        y = if(barcode_on_top)  grid::unit(label_margin_inch, "in") else  grid::unit(label_height - label_margin_inch, "in"),
-        width  = grid::unit( label_width - 2*label_margin_inch, "in"),
-        height = grid::unit( (label_height - 2*label_margin_inch) * text_height, "in"), 
+        x = grid::unit(label_margin_inch , unit),
+        y = if(barcode_on_top)  grid::unit(label_margin_inch, unit) else  grid::unit(label_height - label_margin_inch, unit),
+        width  = grid::unit( label_width - 2*label_margin_inch, unit),
+        height = grid::unit( (label_height - 2*label_margin_inch) * text_height, unit), 
         just = if (barcode_on_top) c("left", "bottom") else c("left", "top"),
         gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )
@@ -181,16 +183,16 @@ simple_label_layout = function(
     cat("Final Font size used is", Fsz, "\n")
     vp_list = list(
       code_vp = grid::viewport(
-        x = grid::unit(label_margin_inch, "in"),
+        x = grid::unit(label_margin_inch, unit),
         y = grid::unit(0.5, "npc"), 
-        width  = grid::unit(barcode_height * (1-2*label_margin)*short_side, "in"), 
-        height = grid::unit(barcode_height * (1-2*label_margin)*short_side, "in"), 
+        width  = grid::unit(barcode_height * (1-2*label_margin)*short_side, unit), 
+        height = grid::unit(barcode_height * (1-2*label_margin)*short_side, unit), 
         just=c("left", "center")),
       text_vp = grid::viewport(
-        x=grid::unit( barcode_height * label_height, "in"),
+        x=grid::unit( barcode_height * label_height, unit),
         y=grid::unit(0.5, "npc"), 
-        width = grid::unit(label_width - barcode_height * label_height, "in"), 
-        height = grid::unit( (1 - 2*label_margin) * label_height, "in"), 
+        width = grid::unit(label_width - barcode_height * label_height, unit), 
+        height = grid::unit( (1 - 2*label_margin) * label_height, unit), 
         just=c("left", "center"),
         gp = grid::gpar(fontsize = Fsz, lineheight = 0.8, col = font_col, fontface = fontface)
       )

@@ -21,6 +21,7 @@
 #' @param content_list a list of contents to fill in the label area layout
 #' @param text_align left, right, or center alignment for text.
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
+#' @param unit unit to be used (inch, mm, cm etc)
 #' 
 #' @return make_custom_label: NULL, just create a pdf
 #' @export
@@ -107,7 +108,8 @@ make_custom_label <- function(
     vp_list = NULL,
     content_list = NULL,
     text_align = "center", # left or center
-    useMarkdown = FALSE # whether treat ** quotes as markdown (only support fontfaces)
+    useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
+    unit = "inch" # see ?grid:unit for supported units (mm, cm, inch etc)
 ){
   if (!is.null(label_type)){
     if (label_type == "avery5967"){
@@ -117,6 +119,7 @@ make_custom_label <- function(
       height_margin=0.5
       label_width=1.75
       label_height=0.5
+      unit = "inch"
     } else if (label_type == "avery5960"){
       numrow=10
       numcol=3
@@ -124,6 +127,7 @@ make_custom_label <- function(
       height_margin=0.5
       label_width=2.63
       label_height=1
+      unit = "inch"
     } else if (label_type == "tough-spots-3/8inch"){
       # USA Scientific TOUGH-SPOTS® LABELS ON SHEETS cat# 9185-1000 to 9185-1008
       # 3/8 inch diameter
@@ -134,6 +138,7 @@ make_custom_label <- function(
       label_width=0.375 # 3/8 diameter
       label_height=0.375
       page_width = 8.4375 # 8 7/16 inch
+      unit = "inch"
     } else {
       cat("Unknown label type!! It now only has preset label sizes for avery5960 and avery5967.\nPlease set the label size manually.\n")
     }
@@ -162,8 +167,8 @@ make_custom_label <- function(
   barcode_layout <- grid::grid.layout(
     numrow*2 - 1, 
     numcol*2 - 1,
-    widths = grid::unit(c(rep(c(label_width, column_space), numcol-1), label_width), "in"),
-    heights = grid::unit(c(rep(c(label_height, row_space), numrow-1), label_height), "in")
+    widths = grid::unit(c(rep(c(label_width, column_space), numcol-1), label_width), units=unit),
+    heights = grid::unit(c(rep(c(label_height, row_space), numrow-1), label_height), units=unit)
   )
   
   # generate label positions
@@ -201,8 +206,8 @@ make_custom_label <- function(
     if(all(i != 1 & lab_pos == c(1, 1))){
       grid::grid.newpage()
       grid::pushViewport(
-        grid::viewport(width = grid::unit(page_width, "in"), 
-                       height = grid::unit(page_height, "in"))
+        grid::viewport(width = grid::unit(page_width, unit), 
+                       height = grid::unit(page_height, unit))
       )
       grid::pushViewport(bc_vp)
     }
@@ -210,10 +215,10 @@ make_custom_label <- function(
     grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y*2-1, layout.pos.col=lab_pos$x*2-1))
     if (showborder) {
       if (border_type == "rectangle") grid::grid.rect()
-      else if (border_type == "circle") grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, "inches"))
+      else if (border_type == "circle") grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, unit))
       else { # both
         grid::grid.rect()
-        grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, "inches"))
+        grid::grid.circle(r=grid::unit(min(label_width, label_height)/2, unit))
       }
     }
     # draw barcodes

@@ -6,14 +6,15 @@
 #' @param content_list a list of contents to put for each element in the vp_list
 #' @param text_align text alignment (left, center, or right). Default is "center"
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
+#' @param unit unit to be used, such as inch, mm, cm etc
 #'
 #' @return preview_label: NULL
 #' @export
 #'
 #' @rdname make_custom_label
-preview_label <- function(label_width=1.75, label_height=0.5, vp_list, content_list, text_align="center", useMarkdown=FALSE){
+preview_label <- function(label_width=1.75, label_height=0.5, vp_list, content_list, text_align="center", useMarkdown=FALSE, unit="inch"){
   grid:: grid.newpage()
-  vpbox = grid::viewport(x=0.5, y=0.5, width=grid::unit(label_width, "inches"), height=grid::unit(label_height, "inches"))
+  vpbox = grid::viewport(x=0.5, y=0.5, width=grid::unit(label_width, unit), height=grid::unit(label_height, unit))
   grid::pushViewport(vpbox)
   grid::grid.rect()
   if (length(vp_list) > 0){
