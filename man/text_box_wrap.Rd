@@ -10,7 +10,8 @@ text_box_wrap(
   box_width,
   box_height,
   fontfamily = "sans",
-  useMarkdown = FALSE
+  useMarkdown = FALSE,
+  unit = "in"
 )
 }
 \arguments{
@@ -18,13 +19,15 @@ text_box_wrap(
 
 \item{font_size}{font size}
 
-\item{box_width}{text box width in inch}
+\item{box_width}{text box width}
 
-\item{box_height}{text box height in inch}
+\item{box_height}{text box height}
 
 \item{fontfamily}{font family ("mono", "sans", "serif") or specific font based on your operation system.}
 
 \item{useMarkdown}{TRUE or FALSE: whether to treat "*" as markdown symbols.}
+
+\item{unit}{length unit, default "inch"}
 }
 \value{
 a vector with 2 elements: new string with "\n" added and the final adjusted font size
