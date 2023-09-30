@@ -206,3 +206,11 @@ mystrwidth = function(text, gp = grid::gpar(), unit="inch"){
     grid::convertWidth(grid::grobWidth(g2), unit)
   })
 }
+
+## only get height of text vector
+mystrheight = function(text, gp = grid::gpar(), unit="inch"){
+  sapply(text, function(x) {
+    g2 = grid::textGrob(x, gp=gp, hjust=0, vjust=1)  # for height y
+    grid::convertHeight(grid::grobHeight(g2), unit)
+  })
+}
