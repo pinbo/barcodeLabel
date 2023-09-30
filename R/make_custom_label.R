@@ -8,12 +8,12 @@
 #' @param ECols number of columns to skip
 #' @param numrow number of label rows per page
 #' @param numcol number of label columns per page
-#' @param page_width page width in inch
-#' @param page_height page height in inch
-#' @param width_margin side margin of label sheet in inch
-#' @param height_margin top margin of lablel sheet in inch
-#' @param label_width label width in inch
-#' @param label_height label height in inch
+#' @param page_width page width
+#' @param page_height page height
+#' @param width_margin side margin of label sheet
+#' @param height_margin top margin of lablel sheet
+#' @param label_width label width
+#' @param label_height label height
 #' @param fontfamily font family ("mono", "sans", "serif") or specific font based on your operation system.
 #' @param showborder logical: whether to show border of labels. Set to TRUE to check whether everything fit in the label area.
 #' @param border_type rectangle, circle, or both
@@ -21,7 +21,7 @@
 #' @param content_list a list of contents to fill in the label area layout
 #' @param text_align left, right, or center alignment for text.
 #' @param useMarkdown whether treat ** quotes as markdown (only support fontfaces)
-#' @param unit unit to be used (inch, mm, cm etc)
+#' @param unit length unit ('inch' or 'mm', 'inch' by default)
 #' 
 #' @return make_custom_label: NULL, just create a pdf
 #' @export
@@ -96,12 +96,12 @@ make_custom_label <- function(
     ECols = 0, # number of columns to skip.
     numrow = 20, # Number of label rows per page
     numcol = 4, # Number of columns per page
-    page_width = 8.5, # page width in inch
-    page_height = 11, # page height in inch
-    width_margin = 0.3, # side margin in inch
-    height_margin = 0.5, # top margin in inch
-    label_width = 1.75, # label width in inch
-    label_height = 0.5, # label height in inch
+    page_width = 8.5, # page width
+    page_height = 11, # page height
+    width_margin = 0.3, # side margin
+    height_margin = 0.5, # top margin
+    label_width = 1.75, # label width
+    label_height = 0.5, # label height
     fontfamily = "mono", # "mono", "sans", "serif"
     showborder = FALSE, # whether to show border of labels
     border_type = "rectangle", # rectangle, circle, or both
@@ -109,7 +109,7 @@ make_custom_label <- function(
     content_list = NULL,
     text_align = "center", # left or center
     useMarkdown = FALSE, # whether treat ** quotes as markdown (only support fontfaces)
-    unit = "inch" # see ?grid:unit for supported units (mm, cm, inch etc)
+    unit = "inch" # length units (inch or mm)
 ){
   if (!is.null(label_type)){
     if (label_type == "avery5967"){
@@ -145,6 +145,8 @@ make_custom_label <- function(
   }
   # clean up any open graphical devices if function fails
   on.exit(grDevices::graphics.off())
+  # check whether unit is inch or mm
+  if (length( grep(unit, c("inch", "mm")) ) == 0) stop('Length unit must be "inch" or "mm"')
   
   width_margin <- page_width - width_margin * 2
   height_margin <- page_height - height_margin * 2
@@ -191,11 +193,12 @@ make_custom_label <- function(
   }
   label_positions <- label_positions[seq(starting_pos_index, starting_pos_index + label_number),]
   # File Creation
+  
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, 
-                 width = page_width, 
-                 height = page_height, 
-                 onefile = TRUE, 
+                 width = ifelse(unit=="mm", page_width/25.4, page_width),
+                 height = ifelse(unit=="mm", page_height/25.4, page_height),
+                 onefile = TRUE,
                  family = fontfamily) # Standard North American 8.5 x 11
   
   bc_vp = grid::viewport(layout = barcode_layout)

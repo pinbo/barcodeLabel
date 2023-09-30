@@ -70,13 +70,13 @@ preview_label(
 
 \item{numcol}{number of label columns per page}
 
-\item{page_width}{page width in inch}
+\item{page_width}{page width}
 
-\item{page_height}{page height in inch}
+\item{page_height}{page height}
 
-\item{width_margin}{side margin of label sheet in inch}
+\item{width_margin}{side margin of label sheet}
 
-\item{height_margin}{top margin of lablel sheet in inch}
+\item{height_margin}{top margin of lablel sheet}
 
 \item{label_width}{label width in inch (default label size is Avery 5967)}
 
